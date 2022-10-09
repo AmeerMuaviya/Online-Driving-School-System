@@ -1,0 +1,457 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- <script src="js/bootstrap.bundle.min.js"></script>
+    <link  href="css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <title>sidePage</title>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+
+
+</head>
+
+<body>
+
+
+    <div class="container-fluid bg-light ">
+        <div class="row">
+            <!-- <div class="col-md-2 border bg-white "> -->
+            <div class="container-fluid">
+                <div class="row flex-nowrap">
+                    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                        <div
+                            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                            <a href="/"
+                                class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                                <span class="fs-5 d-none d-sm-inline">JustDriving</span>
+                            </a>
+                            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                                id="menu">
+                                <li class="nav-item">
+                                    <a href="http://127.0.0.1:8000/studentAdminPanel/" class="nav-link align-middle px-0">
+                                        <i class="fs-4 bi-speedometer2 text-light"></i> <span
+                                            class="ms-1 d-none d-sm-inline text-light">Dashboard</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="http://127.0.0.1:8000/studentAdminPanel/calenderstd/" class="nav-link align-middle px-0">
+                                        <i class="fs-4 bi bi-calendar-date text-light"></i> <span
+                                            class="ms-1 d-none d-sm-inline text-light">Calender</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <hr>
+                            <div class="dropdown pb-4 ">
+                                <a href="#"
+                                    class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if profile_pic %}
+                                    <img src="{{profile_pic.url}}" alt="hugenerd" width="30" height="30"
+                                        class="rounded-circle">
+                                        {% else %}
+                                        <img src="{% static 'images/default/profile.jpg' %}" alt="not found" width="30" height="30"
+                                        class="rounded-circle">
+                                    {% endif %}
+                                    <span class="d-none d-sm-inline mx-1 text-truncate d-inline-block " style="max-width: 130px;"> {{ request.user }}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                                    <li><a class="dropdown-item" href="#">New project...</a></li>
+                                    <li><a class="dropdown-item" href="/studentAdminPanel/changePassword">Change Password</a></li>
+                                    <li><a class="dropdown-item" href="/studentAdminPanel/setting">Settings</a></li>
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><a class="dropdown-item" href="http://127.0.0.1:8000/studentAdminPanel/myPrograms">Programs For me</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li> 
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col py-3">
+                        <div class="col-md-12">
+
+                            <div class="row p-2 border-bottom">
+                                <nav class="navbar navbar-light bg-light">
+                                    <div class="container-fluid">
+                                        <span class="h2">Learning Management system</span>
+                                        <form class="d-flex">
+                                            <input class="form-control" type="search" placeholder="Search"
+                                                aria-label="Search "> &nbsp;
+                                            <button class="btn btn-outline-success" type="submit"><i
+                                                class="bi bi-search "></i></button>
+                                        </form>
+
+                  
+                                    </div>
+                                </nav>
+                            </div>
+
+                            <div class="row d-flex justify-content-evenly ">
+
+                                <div class="col-md-6 rounded-3 bg-white mt-3 p-3">
+
+                                    <div class="font-weight-bold d-flex justify-content-between">
+                                        <span class="fw-bold"> Full-Stack Web Developer</span>
+                                        <span class=""><i class="bi bi-share text-dark pl-4 fs-5"></i> <i
+                                                class="bi bi-bookmark fs-5"></i>
+                                        </span>
+                                    </div>
+                                    <div class="pt-2">
+
+                                        <span>5.0 <i class="bi bi-star-fill text-warning px-2"></i></span> |
+                                        <span class="px-2">reviews (1K)</span> |
+                                        <span class="px-2">10K students</span>
+                                    </div>
+                                    <div class="pt-4 rounded-3" >
+                                        {% if links|length == 0 %}
+                                        <img src="{% static 'other_images/img-removebg-preview.png' %}" alt="not found"><h3 class="d-inline">No videos available</h3>
+                                        {% else %}
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe id="Player" width="560" height="315" src="https://www.youtube.com/embed/{{links.0.link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            
+                                        </div>
+                                        {% endif %}
+
+                                    </div>
+
+                                    <div class="pt-3">
+                                        <div class="row">
+                                            <div class="col">
+
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link active" id="home-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#home" type="button"
+                                                            role="tab" aria-controls="home"
+                                                            aria-selected="true">About</button>
+                                                    </li>
+
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-4">
+                                            <div class="col-1"></div>
+                                            <div class="col-11">
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                        aria-labelledby="home-tab">
+                                                        About This Course
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                                        eiusmod
+                                                        tempor
+                                                        incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor
+                                                        sit
+                                                        amet,
+                                                        consectetur
+                                                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                                        dolore
+                                                        magna
+                                                        aliqua.
+
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                                        eiusmod
+                                                        tempor
+                                                        incididunt ut labore et dolore magna aliqua.</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-md-5 flex-column d-flex p-0">
+
+                                    <!-- For progress -->
+                                    <div class="p-4 rounded-3 bg-white mt-3">
+
+                                        <div class="d-flex justify-content-between ">
+                                            <span class="h5 fw-bold">Progress</span>
+
+                                        </div>
+
+
+                                        <div class="pt-2">
+                                            <div class="progress ">
+                                                <div class="progress-bar progress-bar-striped bg-warning"
+                                                    role="progressbar" style="width: 75%" aria-valuenow="75"
+                                                    aria-valuemin="0" aria-valuemax="100">75
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pt-3 d-flex justify-content-between"><span
+                                                class="fw-bold ">Full-Stack-Developer</span>
+                                            (110/120)
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- second row videos -->
+                                    <div class="p-4 rounded-3 bg-white mt-3">
+
+                                        <div class="d-flex justify-content-between ">
+
+                                            <div class="accordion accordion-flush w-100" id="accordionFlushExample">
+                                                <div class="accordion-item w-100">
+                                                    <h2 class="accordion-header w-100" id="flush-headingOne">
+                                                        <button class=" collapsed border-0 bg-white w-100" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                                            aria-controls="flush-collapseOne">
+                                                            <div class=" justify-content-between d-flex">
+                                                                <span class="fw-bold h5 float-start"> Video
+                                                                    lectures</span>
+                                                                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                                <span class="fs-6 bg-dark text-white rounded-circle p-2 float-end" style="height:  30px; width:31px; ">{{links|length}}</span>
+                                                            </div>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                                        aria-labelledby="flush-headingOne"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            {% for link in links %}
+                                                            <a class="text-decoration-none" id="https://www.youtube.com/embed/{{link.link}}" onclick="displayVideo(this.id)">
+                                                                <div
+                                                                class="my-4 bg-dark rounded-3 d-flex justify-content-between flex-column  p-2 align-items-center">
+                                                                <div> <i 
+                                                                    class="bi bi-play-circle-fill fs-4 text-light"></i>
+                                                                    <span class="  px-2 text-light">Video {{forloop.counter}}</span>
+                                                                    <span class="urls" id="https://www.youtube.com/embed/{{link.link}}player">
+                                                                        {% if forloop.counter == 1 %}
+                                                                        playing...!
+                                                                        {% else %}
+                                                                        {% endif %} 
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        {% endfor %}
+                                                                <script>
+                                                                    function removefromall(){
+                                                                        a=document.getElementsByClassName('urls')
+                                                                        Array.from(a).forEach((value) => {
+                                                                            value.innerHTML=''
+                                                                        })
+                                                                        
+                                                                    }
+                                                                    function displayVideo(id){
+                                                                        document.getElementById('Player').setAttribute('src',id)
+                                                                        removefromall()
+                                                                        document.getElementById(id+'player').innerHTML='Playing...'
+                                                                    }
+                                                                </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- third assignments -->
+                                    <div class="p-4 rounded-3 bg-white mt-3">
+
+                                        <div class="d-flex justify-content-between ">
+
+
+<div class="accordion accordion-flush w-100" id="accordionFlushExample">
+<div class="accordion-item w-100">
+<h2 class="accordion-header w-100" id="flush-headingOne">
+<button class=" collapsed border-0 bg-white w-100" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+<span class="fw-bold h5 float-start"> Assignments <div class="bg-danger rounded-circle d-inline-block" style="width: 25px;">{{docs|length}}</div>
+</button> </h2>
+
+<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample"> 
+
+
+    <div class="accordion-body">
+ {% for doc in docs %}
+<div class=" bg-light rounded-3 d-flex justify-content-between p-2 align-items-center mt-3" style="border:2px solid black ;">
+ <a href="{{doc.file.url}}" class="text-decoration-none text-dark w-100" download>
+    <i class="bi bi-cloud-arrow-down-fill fs-4 "></i>
+<span class="border w-100  px-2">Download Assignment File :{{doc.name}}</span>
+</a>
+
+</div>
+{% endfor %}
+<div class=" bg-light rounded-3 d-flex justify-content-between  p-2 align-items-center mt-3">
+<div>
+<div class="mb-3">
+<label for="formFile" class="form-label">Upload Assignment</label>
+<form action="{% url 'submitAssignment' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+<input class="form-control" type="file" id="formFile" name="file" required> </div>
+<input type="submit" value="Submit Assignment" class="btn btn-success">
+</form>
+  </div> 
+</div>
+<div>Result of Last Submitted Assignment: <strong id="result">{{result}}</strong></div>
+ <div  class=" bg-light rounded-3 d-flex justify-content-between  p-2 align-items-center mt-3">
+
+
+
+
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+                                    <!-- four module  notification-->
+
+                                    <div class="p-4 rounded-3 bg-white mt-3">
+
+                                        <div class="d-flex justify-content-between ">
+
+
+
+                                            <div class="accordion accordion-flush w-100" id="accordionFlushExample">
+                                                <div class="accordion-item w-100">
+                                                    <h2 class="accordion-header w-100" id="flush-headingThree">
+                                                        <button class=" collapsed border-0 bg-white w-100" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                                            aria-controls="flush-collapseOne">
+
+ <span class="fw-bold h5 float-start">Notifications <div class="bg-danger rounded-circle d-inline-block" style="width: 25px;">{{notifications|length}}</div>
+                                                            </span>
+                                                        </button>
+                                                    </h2>
+                                                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                                        aria-labelledby="flush-headingThree"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+{% for notification in notifications %} 
+<div class="p-2 my-3" style="border:1px solid black ;">
+<h3>#{{forloop.counter}}</h3>
+<div class=" bg-light rounded-3 d-flex justify-content-between  p-2 align-items-center mt-3">
+    <span>{{notification.message}}</span>
+</div>
+    <small class="d-block">Date: <strong>{{notification.date}}</strong></small>
+</div>
+{% endfor %}
+                                                          
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="p-4 rounded-3 bg-white mt-3">
+
+                                        <div class="d-flex justify-content-between ">
+
+
+
+                                            <div class="accordion accordion-flush w-100" id="accordionFlushExample">
+                                                <div class="accordion-item w-100">
+                                                    <h2 class="accordion-header w-100" id="flush-headingFour">
+                                                        <button class=" collapsed border-0 bg-white w-100" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#flush-collapseFour" aria-expanded="false"
+                                                            aria-controls="flush-collapseOne">
+
+                                                            <span class="fw-bold h5 float-start">Today's
+                                                                Attendence</span>
+
+                                                        </button>
+                                                    </h2>
+                                                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                                                        aria-labelledby="flush-headingFour"
+                                                        data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+<span class="h6 fw-bold">Mark Your Attendence:</span>
+<div class="pb-2">
+    
+    
+    <div class="form-check" id="attendence">
+        <p style="color:red;">{{message}}</p>
+        <a href="{% url 'markAttendence' request.user %}" role="button" class="btn btn-primary">Mark Attendence</a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    </div>
+
+</body>
+<script>
+    function update(){
+        a=document.querySelector('input[name="markAttendence"]:checked').value;
+        document.getElementById('attendenceStatus').value=a;
+    }
+    function enableBtn(){
+        console.log('user selected file !')
+    }
+    result=document.getElementById('result')
+    if(result.innerText==='Fail'){
+        result.style.color='red'
+    }
+    else if (result.innerText==='Pass'){
+        result.style.color='green'
+    }
+    else if (result.innerText==='Pending'){
+        result.style.color='orange'
+    }
+    else{
+        result.style.color='blue'
+    }
+
+</script>
+</html>

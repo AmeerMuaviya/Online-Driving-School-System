@@ -1,0 +1,62 @@
+{% extends 'mainSidebar.html' %}
+{% block nav %}Attendence History{% endblock nav %}
+{% block title %}Manage Attendence{% endblock title %}
+{% block content %}
+{% if data %}
+no attendences
+{% else %}
+<div>
+    {% for data in attendence %}
+
+        {% if data.none %}
+        <div class="my-4 container">
+            <h3>Attendence For <u id='date{{forloop.counter}}'>{{ data.none }}</u></h3>
+            <u>
+                <h1 class="text-center">No record Found</h1>
+            </u>
+        </div>
+        
+        {% else %}
+        <div class="tablecontainer container my-5">
+        <table class="table">
+            <h3>Attendence For <u id='date{{forloop.counter}}'>{{ data.date }}</u> </h3>
+            <tr>
+
+                <thead>
+                    <th scope="col">Name</th>
+                    <th scope="col">Attendence</th>
+            </tr>
+            </thead>
+
+            <tbody>
+                {% for i in data.todayAttendence %}
+                <tr>
+                    <td class="data">{{i.username}}</td>    
+                    <td class="data status">{{i.status}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table></div>
+        {% endif %}
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+<script>
+    let a= document.getElementById('date1').innerHTML+='&nbsp;&nbsp;&nbsp;<b style="letter-spacing:4px; color:blue;">( Today )</b>';
+    b=document.getElementsByClassName('status')
+    console.log(b)
+    Array.from(b).forEach((value) => {
+        if(value.innerText=='Absent'){
+            value.style.color='red'
+        }
+        else{
+            value.style.color='green'
+        }
+    })
+    
+</script>
+{% endif %}
+{% endblock content %}

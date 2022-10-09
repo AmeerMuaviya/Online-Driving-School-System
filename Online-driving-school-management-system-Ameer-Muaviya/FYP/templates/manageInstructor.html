@@ -1,0 +1,72 @@
+{% extends 'mainSidebar.html' %}
+{%block nav%}Manage Instructors{% endblock %}
+{%block title%}Manage Instructors{% endblock %}
+
+{%block content%}
+{% if context.message%}
+<div class="alert alert-danger alert-dismissible visible fade show" role="alert">
+  <strong>Warning!</strong> Couldn't Add Instructor. It seems that these credentials already exists
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<!-- Add instructor section starts here -->
+<h2 class="text-center mt-5 fw-bolder">Add Instructor</h2>
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+  </div>
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Format : +92312-3456789" required>
+  </div>
+  <div class="mb-3">
+    <label for="experience" class="form-label">Exprerience in Years</label>
+    <input type="number" class="form-control" id="experience" name="experience" required placeholder="Expereince (Years)" max="50">
+  </div>
+  <div class="mb-3">
+    <label for="salllary" class="form-label">Sallary in Rs.</label>
+    <input type="number" class="form-control" id="sallary" name="sallary" required placeholder="Sallary (in digits)">
+  </div>
+  <input type="submit" value="Submit" class=" d-block mx-auto btn btn-primary">
+</form>
+
+{% if context.instructors is None %}
+no instructors yet
+{% else %}
+<h3 class="text-center mt-5 fw-bolder">Existing Instructors</h3>
+<p class="text-center text-secondary">You can't delete an instructor while he is being used by some program.</p>
+<div class="col pt-4 px-4">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Phone No.</th>
+        <th scope="col">Experience</th>
+        <th scope="col">Sallary</th>
+        <th scope="col">action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in context.instructors %}
+      <tr>
+        <td>{{i.name}}</td>
+        <td>{{i.number}}</td>
+        <td>{{i.experience}} Years</td>
+        <td>{{i.sallary}} Rs.</td>
+        <td> <a href='{% url "alterInstructor" "update" i.id %}' type="button" class="btn btn-warning" dis><i class="bi bi-pencil "></i></a>
+          <a href='{% url "alterInstructor" "delete" i.id %}' type="button" class="btn btn-danger" dis><i class="bi bi-trash  text-dark"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endif %}
+
+
+{% endblock %}

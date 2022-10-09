@@ -1,0 +1,65 @@
+{% extends 'mainSidebar.html' %} {% block nav %}Manage Links{% endblock nav %}
+{% block title %}Manage Video Links{% endblock title %} {% block content %}
+<div class="links container my-5">
+    <div class="container my-5">
+        <h1 class="text-center">Send Video Link</h1>
+        <form action="" class="" method="post" onsubmit="return validate()">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Link</label>
+                <input type="url" class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"
+                    required />
+            </div>
+            {% if students|length == 0 %}
+            <i class="text-secondary">No students.</i>
+            {% else %}
+            <label for="selectAll">
+                <input type="checkbox" name="selectAll" class="mx-1" onchange="checkAll(this)" id="selectAll" />Select
+                All</label>
+            {% for student in students %}
+            <div class="form-check">
+                <label class="form-check-label" for="{{student.username}}">
+                    <input class="checkboxes" type="checkbox" value="{{student.username}}" id="{{student.username}}" />
+                    {{student.username}}
+                </label>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <input type="text" class="visually-hidden" id="students" name="students" />
+
+            <button class="btn btn-primary my-3 mx-auto d-block w-25" type="submit">
+                Send Link
+            </button>
+        </form>
+    </div>
+
+    <div class="container my-5">
+        {% if links == None %}
+        <h5 class="text-secondary text-center">No Links for now</h5>
+        {% else %} {% for link in links %}
+        <div class="card my-3">
+            <div class="card-header">
+                <h5># {{forloop.counter}}</h5>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title fw-bolder">
+                    Link is currently being Used by : <u>{{link.username}}</u>
+                </h5>
+                <a href="https://youtu.be/{{link.link}}" class="text-dark d-block"
+                    target="_blank">https://youtu.be/{{link.link}}</a>
+                <a href="{% url 'deleteLink' link.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        {% endfor %} {% endif %}
+    </div>
+</div>
+<script>
+    function validate() {
+        students = document.getElementById("students");
+        if (students.value === "") {
+            alert("Select at Least One Student.");
+            return false;
+        }
+    }
+</script>
+{% endblock content %}

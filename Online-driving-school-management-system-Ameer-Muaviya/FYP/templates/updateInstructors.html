@@ -1,0 +1,39 @@
+{% extends 'mainSidebar.html' %} 
+{% block nav %}Update Instructor{% endblock nav %}
+{% block title %}Update Instructor{% endblock title %}
+{% block content %}
+<div>
+{% if msg %}
+<div class="alert alert-danger alert-dismissible mt-3 fade show" role="alert" >
+  <strong>Error!</strong>
+  {% if msg == 'invalidPhone' %}
+  Phone Number isnot Valid !
+  {% elif msg == 'exists' %}
+  You should check in on some of those fields below.
+  {% endif %}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<form action="" method="post">
+  <h2 class="fw-bold my-3 text-center">Update Instructor details.</h2>
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Name" value='{{instructor.name}}' required>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number</label>
+      <input type="tel" class="form-control" id="phone" name="phone"  placeholder="eg: +923012345678" required value='{{instructor.number}}'>
+    </div>
+    <div class="mb-3">
+      <label for="experience" class="form-label">Exprerience</label>
+      <input type="number" class="form-control" id="experience" name="experience" required placeholder="Expereince (Years)" value='{{instructor.experience}}' maxlength="2">
+    </div>
+    <div class="mb-3">
+      <label for="salllary" class="form-label">Sallary</label>
+      <input type="number" class="form-control" id="sallary" name="sallary" required placeholder="Sallary (in digits)" value='{{instructor.sallary}}'>
+    </div>
+    <input type="submit" value="Confirm & Update " class=" d-block mx-auto btn btn-primary">
+</form>
+</div>
+{% endblock content %}

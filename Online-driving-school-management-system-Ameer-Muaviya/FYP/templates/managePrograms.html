@@ -1,0 +1,88 @@
+{% extends 'mainSidebar.html' %}
+{% block nav %}Manage Programs{% endblock nav %}
+{% block title %}Manage Programs{% endblock title %}
+{% block content %}
+
+{% if context.message %}
+<div class="alert alert-danger visible  alert-dismissible fade show" role="alert">
+    <strong>Error!</strong>
+    {% if context.message == 'existingVehicleError' %} Vehicle already in use !
+    {% elif context.message == 'insNotAvailable' %} Instructor is busy !
+    {% else %}
+    <span>Unknown Error Accured !</span>
+    {% endif %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<div>
+    <div class="divforform container my-5">
+        <h1 class="text-center my-2">Add Programs for Students !</h1>
+        <form method="post" class="">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Program title</label>
+                <input type="text" class="form-control" id="title" name="name" placeholder="some Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="summary" class="form-label">Program Summary</label>
+                <textarea class="form-control" id="summary" name="summary" rows="9" required></textarea>
+            </div>
+
+            <div class="row py-2 my-2">
+                <div class="col">
+                    <label for="formGroupExampleInput" class="form-label fw-bold">Vehicles</label>
+                    <input type="text" id="category" class="visually-hidden" name="vehicle" value="">
+                    <select class="form-select" id="choose_category" onchange="update(this.id,'category')" required>
+                        <option selected value=''>No Vehicle Selected</option>
+
+                        {% for vh in context.vehicles %}
+                        <option>{{vh.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row py-2 my-2">
+                <div class="col">
+                    <label for="instructor" class="form-label fw-bold">Instructor</label>
+                    <input type="text" id="instructor" class="visually-hidden" name="instructor" value="">
+                    <select class="form-select" id="choose_instructor" onchange="update(this.id,'instructor')" required>
+                        <option selected value=''>No Instructor Selected</option>
+
+                        {% for ins in context.instructors %}
+                        <option>{{ins.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mx-auto d-block"
+                style="margin-top: 22px; width: 250px;">Confirm & Add</button>
+        </form>
+    </div>
+
+    <h1 class="text-center mt-5">Running Programs for Students</h1>
+</div>
+<div class="programs container mb-5">
+    <!-- programs section -->
+    {{content.programs}}
+    {% if context.programs is None %}
+    <p class="text-center text-secondary">No Programs For now !</p>
+    {% else %}
+    {% for pg in context.programs %}
+    <div class="card my-4">
+        <div class="card-header">
+            {{pg.program_name}}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Vehicle: {{pg.vehicle}}</h5>
+            <p class="card-text">Summary: {{pg.summary}}</p>
+            <b class="card-text d-block">Instructor: {{pg.instructor}}</b>
+            <a href="{% url 'changeProgram' 'delete' pg.id %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'changeProgram' 'update' pg.id %}" class="btn btn-warning">Update</a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock content %}

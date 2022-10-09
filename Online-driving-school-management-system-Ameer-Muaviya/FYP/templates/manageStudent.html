@@ -1,0 +1,112 @@
+{% extends 'mainSidebar.html' %}
+    {%block title%}manageStudents{%endblock%}
+    {% block nav %}
+    Manage Students
+{% endblock %}
+    <!-- Alert -->
+    {% block content %}
+    <div class="{{class}} visually-hidden alert alert-{{type}} alert-dismissible fade my-4 show" role="alert"
+        id="alert">
+        <strong>{{type|upper}}</strong> {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <!-- Alert -->
+
+    <div class="divfortable container my-5">
+        <table class="table">
+            <h1 class="text-center">Manage Studetns !</h1>
+            {% if students is None %}
+                <h3 class="text-secondary my-5">No students.</h3>
+            {% else %}
+            <thead>
+                <tr>
+                    <th scope="col">Student Name</th>
+                    <th scope="col">Phone No.</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td class="data">{{student.username}}</td>
+                    <td class="data">{{student.phone}}</td>
+                    <td class="data">{{student.email}}</td>
+                    <td class="data">{{student.address}}</td>
+                    <td class="data">
+
+                    </a>
+
+                        <button type="button" class="btn btn-danger" dis><a
+                                href="http://127.0.0.1:8000/deleteStudent/{{student.username}}"
+                                class="bi bi-trash  text-dark"></a></button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+
+        </table>
+    </div>
+    </div>
+
+    
+    
+
+
+
+
+
+
+    <script>
+        // don't touch this code ... it is very Important !
+        function update(id, inputTagName) {
+            var select = document.getElementById(id);
+            var option = select.options[select.selectedIndex];
+            document.getElementById(inputTagName).value = option.text;
+        }
+        let checkboxes=document.querySelectorAll('.checkboxes')
+    let studentBox=document.getElementById('students')    
+    let arr=[]
+    for (checkbox of checkboxes){
+        checkbox.addEventListener('click',function(){
+            if(this.checked){
+                arr.push(this.value)
+                arr=[...new Set(arr)]
+                studentBox.value=arr
+                
+            }
+            else{
+                arr=arr.filter(e => e!==this.value)
+arr=arr=[...new Set(arr)]
+
+                studentBox.value=arr
+
+            }
+        })
+    }
+// Select all check Boxes
+function checkAll(myCheckbox){
+if(myCheckbox.checked == true){
+checkboxes.forEach(function(checkbox){
+checkbox.checked = true;
+arr.push(checkbox.value)
+arr=arr=[...new Set(arr)]
+studentBox.value=arr
+});
+}
+else{
+checkboxes.forEach(function(checkbox){
+checkbox.checked = false;
+arr=arr.filter(e => e!==checkbox.value)
+arr=arr=[...new Set(arr)]
+studentBox.value=arr
+});
+}
+}
+
+    </script>
+
+    {% endblock content %}

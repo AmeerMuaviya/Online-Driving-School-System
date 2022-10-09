@@ -1,0 +1,61 @@
+{% extends 'mainSidebar.html' %}
+    {% block title %}Manage Notifications{% endblock title %}
+   {% block nav %}ManageNotifications{% endblock nav %}
+   {% block content %}
+   <div class="notifications container my-5">
+    <div class="container my-5">
+        <h1 class="text-center">What's in your mind? Let your Students Know !</h1>
+        <form action="{% url 'manageNotifications' %}" class="" method="post" onsubmit="return validate()">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Example Message</label>
+                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3" required></textarea>
+            </div>
+            {% if students|length == 0 %}
+            <i class="text-secondary">No students.</i>
+            {% else %}
+            <label for="selectAll">
+                <input type="checkbox" name="selectAll" class="mx-1" onchange="checkAll(this)" id="selectAll">Select All</label>
+            {% for student in students %}
+            <div class="form-check">
+                <label class="form-check-label" for="{{student.username}}">
+                    <input class="checkboxes" type="checkbox" value="{{student.username}}" id="{{student.username}}">
+                    {{student.username}}
+                </label>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <input type="text" class="visually-hidden" id="students" name="students">
+
+            <button class="btn btn-primary my-3 d-block w-25 mx-auto" type="submit">Send Notification</button>
+        </form>
+    </div>
+
+       <div class="container my-5">
+        {% if notifications == None %}
+        <h5 class="text-secondary">No notifications for now </h5>
+        {% else %}
+        {% for notification in notifications %}
+        <div class="card my-3">
+            <div class="card-header">
+              <h5># {{forloop.counter}}</h5>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title fw-bolder">Notification is currently Used by : <u>{{notification.username}}</u></h5>
+              <p class="card-text">{{notification.message}}</p>
+              <a href="{% url 'deleteNotification' notification.id %}" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div></div>
+    <script>
+        function validate(){
+            students=document.getElementById('students')
+            if(students.value==""){
+                alert('Select at Least One Student.')
+                return false;
+            }
+        }
+    </script>
+    {% endblock content %}

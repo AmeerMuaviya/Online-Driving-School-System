@@ -1,0 +1,57 @@
+{% extends 'mainSidebar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Send Notifications{% endblock title %}</title>
+</head>
+<body>
+    {% block nav %}
+    <div class="border-bottom">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <span class="h2">Manage Vehicels</span>
+                <form class="d-flex">
+                    <input class="form-control" type="search" placeholder="Search"
+                        aria-label="Search "> &nbsp;
+                    <button class="btn btn-outline-success" type="submit"><i
+                        class="bi bi-search "></i></button>
+                </form>
+
+
+            </div>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center">What's in your mind? Let your Students Know !</h1>
+    <form action="{% url 'sendNotification' %}" class="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Example Message</label>
+            <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <label for="selectAll">
+        <input type="checkbox" name="selectAll" class="mx-1" onchange="checkAll(this)" id="selectAll">Select All</label>
+        {% for student in students %}
+        <div class="form-check">
+            <label class="form-check-label" for="{{student.username}}">
+                <input class="checkboxes" type="checkbox" value="{{student.username}}" id="{{student.username}}">
+                {{student.username}}
+            </label>
+        </div>
+        {% endfor %}
+        <input type="text" class="" id="students" name="students">
+
+        <button class="btn btn-primary my-3" type="submit">Send Notification</button>
+    </form>
+</div>
+
+
+{% endblock content %}
+</body>
+</html>

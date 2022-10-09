@@ -1,0 +1,32 @@
+{% extends 'mainSidebar.html' %}
+{% block nav %}Edit Vehicle{% endblock nav %}
+{% block title %}Edit Vehicle{% endblock title %}
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <h2 class="fw-bold my-3 text-center"><span class="text-warning">Warning!</span> This Action can't be undone.</h2>
+    <p class="text-center">Obviously you can update it again :)</p>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Name</label>
+    <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="New name of the Vehicle" value='{{vehicleData.name}}'>
+  </div>
+  <div class="mb-3">
+    <label for="number" class="form-label">Number</label>
+    <input type="number" class="form-control" name="number" id="number" placeholder="New number of Vehicle (Input must be a number)" value='{{vehicleData.number}}'>
+  </div>
+  <div class="mb-3">
+    <label for="fee" class="form-label">Fee</label>
+    <input type="number" class="form-control" name="fee" id="fee" placeholder="Fee (Input must be a number)" value='{{vehicleData.fee}}'>
+  </div>
+  
+  <button class="btn btn-primary d-block mx-auto w-25">Confirm & Update</button>
+  </form>
+  <script>
+    function update(id,inputTagName){
+      let select = document.getElementById(id);
+      let option = select.options[select.selectedIndex];
+      document.getElementById(inputTagName).value = option.text;
+    }
+    </script>
+{% endblock content %}

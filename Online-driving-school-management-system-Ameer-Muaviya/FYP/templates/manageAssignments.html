@@ -1,0 +1,109 @@
+{% extends 'mainSidebar.html' %}
+{%block title%}Assignments{%endblock%}
+
+    {% block nav %}Manage Assignments{% endblock %}
+    
+    {% block content %}
+    <style>
+        .alert{
+            visibility: hidden;
+        }
+    </style>
+    <div class="alert alert-{{alert.type}} {{alert.visibility}} alert-dismissible fade show" role="alert">
+        <strong>{{alert.type|upper}}</strong> {{alert.message}}
+      </div>
+<form action="" method="post" class="my-4" enctype="multipart/form-data">
+    <h3 class="text-center">Assign Tasks to your Students !</h3>
+{% csrf_token %}
+<div class="mb-3">
+    <label for="name" class="form-label">Give some name to this assignment</label>
+    <input type="text" name="name" class="form-control" id="name" placeholder="name" required>
+  </div>
+  <div class="mb-3">
+    <label for="file" class="form-label">Choose assignment file</label>
+    <input type="file" class="form-control" id="one_file" name="doc_file" rows="3" required>
+    <div class="cboxes d-flex flex-column align-items-center my-4">
+        <div class="innercbox">
+    <label for="selectAll">
+    <input type="checkbox" name="selectAll" class="mx-1" onchange="checkAll(this)" id="selectAll">Select All</label>
+    {% for student in context.students %}
+    <div class="form-check">
+        <label class="form-check-label" for="{{student.username}}">
+            <input class="checkboxes" type="checkbox" value="{{student.username}}" id="{{student.username}}">
+            {{student.username}}
+        </label>
+    </div>
+    {% endfor %}
+    <input type="text" class="visually-hidden" id="students" name="students">
+</div>
+<input type="submit" value="Add Assignment" class="btn btn-primary my-5">
+</div>
+  </div>
+</form>
+
+<!-- manage assignment block starts from here ! -->
+<div class="border">
+    <h2 class="text-center">Manage Sent assignments</h2>
+    {% if context.assignments is None %}
+    <h4 class="text-center my-4 text-secondary"><u>No Assignments to display for Now !</u></h4>
+    {% else %}
+    {% for assignment in context.assignments %}
+    <div class="card my-5">
+        <div class="card-header">
+            {{assignment.name}}
+        </div> 
+        <div class="card-body">
+            <h5>This Assignment is currently being used by <strong><u>{{assignment.username}}</u></strong> </h5>
+            <a href="{{assignment.file.url}}" type="button">View file</a>
+            <div class="my-2">
+            <a href="{{ assignment.file.url }}" class="btn btn-success" type="button"><i class="bi bi-cloud-download"></i> Download assignment file</a></div>
+            <a href="{% url 'deleteAssignment' assignment.name assignment.username %}" class="btn btn-danger" style="position:absolute ; right: 10px; bottom: 8px;">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</div>
+</body>
+<script>   
+    let checkboxes=document.querySelectorAll('.checkboxes')
+    let studentBox=document.getElementById('students')    
+    let arr=[]
+    for (checkbox of checkboxes){
+        checkbox.addEventListener('click',function(){
+            if(this.checked){
+                arr.push(this.value)
+                arr=[...new Set(arr)]
+                studentBox.value=arr
+                
+            }
+            else{
+                arr=arr.filter(e => e!==this.value)
+    arr=arr=[...new Set(arr)]
+    
+                studentBox.value=arr
+    
+            }
+        })
+    }
+    function checkAll(myCheckbox){
+        if(myCheckbox.checked == true){
+            checkboxes.forEach(function(checkbox){
+            checkbox.checked = true;
+            arr.push(checkbox.value)
+            arr=arr=[...new Set(arr)]
+            studentBox.value=arr
+    });
+    }
+        else{
+            checkboxes.forEach(function(checkbox){
+            checkbox.checked = false;
+            arr=arr.filter(e => e!==checkbox.value)
+            arr=arr=[...new Set(arr)]
+            studentBox.value=arr
+    });
+    }
+    } 
+</script>
+
+{% endblock content %}

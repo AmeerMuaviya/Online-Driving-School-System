@@ -1,0 +1,67 @@
+{% extends 'mainSidebar.html' %}
+{% block nav %}Update Program {% endblock nav %}
+{% block title %}Update Program{% endblock title %}
+
+{% block content %}
+{% if data.message %}
+<div class="alert alert-danger visible  alert-dismissible fade show" role="alert">
+    <strong>Error!</strong>
+    {% if data.message == 'existingVehicleError' %} Vehicle already in use !
+    {% elif data.message == 'insNotAvailable' %} Instructor is busy !
+    {% else %}
+    <span>Unknown Error Accured !</span>
+    {% endif %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<h3 class="text-center mt-5"> <span class="text-warning fw-bolder">Warning!</span> Update Programs carefully. This action can't be undone.</h3>
+
+<form method="post" class="">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Program title</label>
+        <input type="text" class="form-control" id="title" name="name" placeholder="some Name" required value='{{data.program.program_name}}'>
+    </div>
+    <div class="mb-3">
+        <label for="summary" class="form-label">Program Summary</label>
+        <textarea class="form-control" id="summary" name="summary" rows="9" required >{{data.program.summary}}</textarea>
+    </div>
+
+    <div class="row py-2 my-2">
+        <div class="col">
+            <label for="formGroupExampleInput" class="form-label fw-bold">Vehicle</label>
+            <input type="text" id="category" class="visually-hidden" name="vehicle" value="{{data.program.vehicle}}">
+            <select class="form-select" id="choose_category" onchange="update(this.id,'category')" required>
+                <option selected >{{data.program.vehicle}}</option>
+                {% for vh in data.vehicles %}
+                <option>{{vh.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row py-2 my-2">
+        <div class="col">
+            <label for="instructor" class="form-label fw-bold">Instructor</label>
+            <input type="text" id="instructor" class="visually-hidden" name="instructor" value="{{data.program.instructor}}">
+            <select class="form-select" id="choose_instructor" onchange="update(this.id,'instructor')" required>
+                <option selected>{{data.program.instructor}}</option>
+
+                {% for ins in data.instructors %}
+                <option>{{ins.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary mx-auto d-block my-5"
+        style="margin-top: 22px; width: 250px;">Confirm & Update</button>
+</form>
+<script>
+    function update(id,inputTagName){
+      let select = document.getElementById(id);
+      let option = select.options[select.selectedIndex];
+      document.getElementById(inputTagName).value = option.text;
+    }
+    </script>
+{% endblock content %}

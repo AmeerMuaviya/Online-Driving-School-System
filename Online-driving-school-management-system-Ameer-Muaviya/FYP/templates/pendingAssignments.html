@@ -1,0 +1,42 @@
+{% extends 'mainSidebar.html' %}
+
+  {%block title%}Pending Assignments{%endblock%}
+
+  {% block nav %}
+Pending Assignments
+   {% endblock %}
+   {% block content %}
+<div class="container my-4">
+    {% if assignments is None %}
+ no assignment
+    {% else %}
+    {% for assignment in assignments %}
+    <div class="card my-5">
+        <div class="card-header">
+          Pending Assignment..!
+        </div>
+        
+        <div class="card-body">
+          <h5 class="card-title">The user <b>{{assignment.username}}</b> Submitted an assignment  on <strong class="fw-bolder"> {{assignment.date}} </strong> Check this out.</h5>
+          <a href="{% url 'deletePendingAssignment' assignment.id %}" class="btn btn-warning position-absolute" style="right:3px; top: 45px;">Ignore</a>
+          <a href="{{assignment.file.url}}" download role="button" class="d-inline-block my-2 btn btn-success">Download Assignment file Now</a>
+          <span class='d-block'>Result</span>
+          <!-- radios -->
+          
+          <!-- radios -->
+          <div class="btns mx-4 d-flex w-25 justify-content-evenly">
+            <a href="{% url 'approveAssignment' assignment.username assignment.date 'Pass' %}" role="button" class="btn btn-success">Pass</a>
+            <a href="{% url 'approveAssignment' assignment.username assignment.date 'Fail' %}" role="button" class="btn btn-danger">Fail</a></div>
+
+        </div>
+      </div>
+    
+    {% endfor %}
+    {% endif %}
+</div>
+<script>
+  function update(id){
+    document.getElementById('state').value=document.getElementById(id).value
+  }
+</script>
+{% endblock content %}

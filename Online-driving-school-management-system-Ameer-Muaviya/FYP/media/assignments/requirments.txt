@@ -1,0 +1,9 @@
+*Performance
+
+Manage Assignmetns
+Instructors
+Courses
+Manage Programs
+ManageNotifications
+Manage Attendence
+Manage Links

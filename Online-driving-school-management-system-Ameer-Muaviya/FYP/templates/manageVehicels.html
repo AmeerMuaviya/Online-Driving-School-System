@@ -1,0 +1,91 @@
+{% extends 'mainSidebar.html' %}
+
+{% block nav %}Manage Vehicles{% endblock %}
+{% block title %}Manage Vehicles{% endblock %}
+{%block content%}
+
+{% if notification.msgtype  %}
+<div class="contentBox my-4">
+  <div class="alert alert-{{notification.msgtype}} visible alert-dismissible fade show" role="alert">
+    <strong>{{notification.msgtype|upper}}</strong> 
+    {% if notification.msgtype == 'success' %} Successfully Added new vehicle.
+    {% elif notification.msgtype == 'danger' %} Some Error Accured. It seems that some data with same creadentials already exists. Please check for it and try again using unique name and number for vehicle
+    {% endif %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %}
+
+<form action="" method="post">
+  {% csrf_token %}
+  <h2 class="fw-bold my-3 text-center">Add a new Vehicle</h2>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Name</label>
+  <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Enter the name of the Vehicle">
+</div>
+
+<div class="mb-3">
+  <label for="number" class="form-label">Number</label>
+  <input type="number" class="form-control" name="number" id="number" placeholder="Number of Vehicle (Input must be a number)">
+</div>
+<div class="mb-3">
+  <label for="fee" class="form-label">Fee</label>
+  <input type="number" class="form-control" name="fee" id="fee" placeholder="Fee (Input must be a number)">
+</div>
+
+<button class="btn btn-primary d-block mx-auto w-25">Submit</button>
+</form>
+
+<hr class="my-5"">
+{% comment %} add Vehicles form endss here {% endcomment %}
+<div class="row d-flex justify-content-evenly container my-5">
+  <h2 class="text-center fw-bolder">Existing Veicles</h2>
+  <p class="text-center text-secondary">You can't delete a vehicle if it is currently being used in any program.</p>
+  {% if not allVehicles %}
+  <h4 class="text-center my-4 text-secondary">No Vehicles to display for Now</h4>
+  {% else %}
+                                <div class="col pt-4 px-4">
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Index</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Number</th>
+                                            <th scope="col">Fee</th>
+                                            <th scope="col">action</th>
+                                            
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+{% for vehicle in allVehicles %}
+<tr>
+  <td class='fw-bolder'>#{{forloop.counter}}</td>
+  <td class="{{vehicle.id}}">{{vehicle.name}}</td>
+<td class="{{vehicle.id}}">{{vehicle.number}}</td>
+<td class="{{vehicle.id}}">{{vehicle.fee}}</td>
+<td> 
+  <a href="{% url 'changeVehicle' 'update' vehicle.id %}" type="button" class="btn btn-warning"><i class="bi bi-pencil "></i></a>
+
+<a href="{% url 'changeVehicle' 'delete' vehicle.id %}" type="button" class="btn btn-danger"><i class="bi bi-trash  text-dark"></i></a>
+</td>
+</tr>
+{% endfor %}
+  {% endif %}
+                                        </tbody>
+                                      </table>
+                                      <div class="d-grid gap-2 col-4 mx-auto">
+                                       
+                                        
+                                      </div>
+
+
+
+
+                                </div>
+                               
+                            </div>
+
+
+                          </div>
+                          
+                          
+                          {% endblock %}
